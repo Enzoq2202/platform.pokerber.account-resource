@@ -1,13 +1,14 @@
 package insper.store.account;
 
 import java.util.Map;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AccountResource implements AccountController {
@@ -42,6 +43,16 @@ public class AccountResource implements AccountController {
                     ).toString())
             ), HttpStatus.OK
         );
+    }
+
+    // Implementação do novo método para buscar uma conta pelo ID
+    @GetMapping("/accounts/{id}")
+    public ResponseEntity<AccountOut> readById(@PathVariable String id) {
+        Account account = accountService.read(id);
+        if (account == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(AccountParser.to(account));
     }
 
     @Override
@@ -83,5 +94,7 @@ public class AccountResource implements AccountController {
             .build();
         return ResponseEntity.ok(account);
     }
+
+    
     
 }
