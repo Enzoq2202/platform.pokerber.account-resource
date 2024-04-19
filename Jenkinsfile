@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build Account') {
             steps {
-                build job: 'pokerber.account', wait: true
+                build job: 'store.account', wait: true
             }
         }
         stage('Build') { 
