@@ -6,6 +6,11 @@ pipeline {
                 build job: 'store.account', wait: true
             }
         }
+        stage('Build Redis') {
+            steps {
+                build job: 'store.redis', wait: true
+            }
+        }
         stage('Build') { 
             steps {
                 sh 'mvn clean package'
